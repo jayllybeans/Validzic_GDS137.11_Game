@@ -19,7 +19,7 @@ var bg = new GameObject({x:-4096 + canvas.width,y:level.y, width:4096, height:ca
 bg.img.src = `images/skyBackground.png`;
 
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
-var monster = new GameObject({x:canvas.width - player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
+var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
 
 
 
@@ -29,14 +29,14 @@ function animate()
     context.clearRect(0,0,canvas.width, canvas.height);
 
     if(a){
-        player.vx -= 0.8;
+        player.vx -= 1;
     }
     if(d){
-        player.vx += 0.8;
+        player.vx += 1;
     }
     
     
-    player.vy += gravity;
+     player.vy += gravity;
      player.vx *= friction.x;
      player.vy *= friction.y;
 
@@ -51,9 +51,25 @@ function animate()
         }
     }
 
+    monster.vx -= 0.2;
+    monster.vx *= friction.x;
+    monster.x += monster.vx;
+    monster.x -= player.vx * 0.1;
+
     //Keep Player onscreen
     if(player.x < player.width/2)player.x = player.width/2;
     if(player.x > canvas.width - player.width/2)player.x = canvas.width - player.width/2;
+    if(bg.x >= 0)bg.x = 0;
+    if(bg.x <= canvas.width - 4096)bg.x = canvas.width - 4096;
+    if(ground.x >= 0)ground.x = 0;
+    if(ground.x <= canvas.width - 4096)ground.x = canvas.width - 4096;
+
+    if(monster.overlap(player))
+    {
+        player.x = canvas.width/2;
+        monster.x = canvas.width + player.width * 2;
+    }
+
     level.x -= player.vx;
     bg.x -= player.vx * 0.5;
     bg.drawStaticImage({x:0,y:0});

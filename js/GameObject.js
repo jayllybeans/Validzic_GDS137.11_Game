@@ -292,26 +292,6 @@ function GameObject(obj)
 		this.x += this.vx;
 		this.y += this.vy;
 	}
-
-	
-	//---------Returns object's for the top, bottom, left and right of an object's bounding box.
-	/*this.left = function() 
-	{
-		return {x:this.x - this._hitBoxWidth/2 - 1 , y:this.y, world:this.world}
-	}
-	this.right = function() 
-	{
-		return {x:this.x + this._hitBoxWidth/2 + 1 , y:this.y, world:this.world}
-	}
-	
-	this.top = function() 
-	{
-		return {x:this.x, y:this.y - this._hitBoxHeight/2 - 1, world:this.world}
-	}
-	/*this.bottom = function() 
-	{
-		return {x:this.x , y:this.y + this._hitBoxHeight/2 + 1, world:this.world}
-	}*/
 	
 	this.overlap= function(obj)
 	{
