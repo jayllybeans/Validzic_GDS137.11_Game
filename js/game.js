@@ -19,6 +19,7 @@ var bg = new GameObject({x:-4096 + canvas.width,y:level.y, width:4096, height:ca
 bg.img.src = `images/skyBackground.png`;
 
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
+var monster = new GameObject({x:canvas.width - player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
 
 
 
@@ -58,4 +59,5 @@ function animate()
     bg.drawStaticImage({x:0,y:0});
     ground.drawStaticImage({x: -ground.width/2, y: -canvas.height + 35 + player.height/2});
     player.drawRect();
+    monster.drawRect();
 }
