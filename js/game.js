@@ -5,16 +5,17 @@ var interval = 1000/60;
 var timer = setInterval(animate, interval);
 
 
+
 var gravity = 1;
 var friction = {x:.85,y:.97};
 
 var stage = new GameObject({width:canvas.width, height:canvas.height});
 var level = new GameObject({x:0,y:0});
 
-var ground = new GameObject({width:canvas.width*10, x:canvas.width*10/2-200,height:64,y:canvas.height-32})
+var ground = new GameObject({width:canvas.width*10, x:-4096 + canvas.width,height:canvas.height,y:canvas.height-32, world:level});
 ground.img.src=`images/ground.png`;
 
-var bg = new GameObject({x:level.x,y:level.y, width:canvas.width*4, height:canvas.height});
+var bg = new GameObject({x:-4096 + canvas.width,y:level.y, width:4096, height:canvas.height});
 bg.img.src = `images/skyBackground.png`;
 
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
@@ -48,8 +49,13 @@ function animate()
              player.vy = -18;
         }
     }
-    
+
+    //Keep Player onscreen
+    if(player.x < player.width/2)player.x = player.width/2;
+    if(player.x > canvas.width - player.width/2)player.x = canvas.width - player.width/2;
+    level.x -= player.vx;
+    bg.x -= player.vx * 0.5;
     bg.drawStaticImage({x:0,y:0});
-    ground.drawStaticImage({x: 0, y: 100});
+    ground.drawStaticImage({x: -ground.width/2, y: -canvas.height + 35 + player.height/2});
     player.drawRect();
 }
