@@ -15,6 +15,8 @@ var level = new GameObject({x:0,y:0});
 var currentState = "titleScreen";
 var states =[];
 
+var backgroundNoise = document.getElementById("backgroundAudio");
+
 var title = new GameObject({width:canvas.width, height:canvas.height, x:0, y:0});
 title.img.src = `images/identityTitleScreen.png`;
 
@@ -42,12 +44,12 @@ states["titleScreen"] = function()
     if(enter)
     {
         currentState = "game";
+        backgroundNoise.play();
     }
 }
 
 states["game"] = function()
 {
-
     if(a){
         player.vx -= 1;
     }
