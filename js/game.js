@@ -12,6 +12,12 @@ var friction = {x:.85,y:.97};
 var stage = new GameObject({width:canvas.width, height:canvas.height});
 var level = new GameObject({x:0,y:0});
 
+var currentState = "titleScreen";
+var states =[];
+
+var title = new GameObject({width:canvas.width, height:canvas.height, x:0, y:0});
+title.img.src = `images/identityTitleScreen.png`;
+
 var ground = new GameObject({width:canvas.width*10, x:-4096 + canvas.width,height:canvas.height,y:canvas.height-32, world:level});
 ground.img.src=`images/ground.png`;
 
@@ -27,6 +33,20 @@ var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height
 function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
+    states[currentState]();
+}
+
+states["titleScreen"] = function()
+{
+    title.drawStaticImage({x:0, y:0});
+    if(enter)
+    {
+        currentState = "game";
+    }
+}
+
+states["game"] = function()
+{
 
     if(a){
         player.vx -= 1;
@@ -68,6 +88,7 @@ function animate()
     {
         player.x = canvas.width/2;
         monster.x = canvas.width + player.width * 2;
+        currentState = "titleScreen";
     }
 
     level.x -= player.vx;
