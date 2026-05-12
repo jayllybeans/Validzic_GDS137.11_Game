@@ -14,6 +14,7 @@ var currentState = "titleScreen";
 var states =[];
 
 var backgroundNoise = document.getElementById("backgroundAudio");
+var collisionNoise = document.getElementById("screamAudio");
 
 var title = new GameObject({width:canvas.width, height:canvas.height, x:0, y:0});
 title.img.src = `images/identityTitleScreen.png`;
@@ -88,6 +89,8 @@ states["game"] = function()
         bg.x = -4096;
         ground.x = -4096;
         backgroundNoise.pause();
+        collisionNoise.currentTime = 0;
+        collisionNoise.play();
         currentState = "titleScreen";
     }
 
