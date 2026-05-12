@@ -4,8 +4,6 @@ var context = canvas.getContext(`2d`);
 var interval = 1000/60;
 var timer = setInterval(animate, interval);
 
-
-
 var gravity = 1;
 var friction = {x:.85,y:.97};
 
@@ -29,9 +27,6 @@ bg.img.src = `images/skyBackground.png`;
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
 var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
 
-
-
-
 function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
@@ -43,8 +38,8 @@ states["titleScreen"] = function()
     title.drawStaticImage({x:0, y:0});
     if(enter)
     {
+        backgroundNoise.currentTime = 0;
         currentState = "game";
-        backgroundNoise.play();
     }
 }
 
@@ -56,7 +51,7 @@ states["game"] = function()
     if(d){
         player.vx += 1;
     }
-    
+	backgroundNoise.play();
     
      player.vy += gravity;
      player.vx *= friction.x;
@@ -90,6 +85,9 @@ states["game"] = function()
     {
         player.x = canvas.width/2;
         monster.x = canvas.width + player.width * 2;
+        bg.x = -4096;
+        ground.x = -4096;
+        backgroundNoise.pause();
         currentState = "titleScreen";
     }
 
