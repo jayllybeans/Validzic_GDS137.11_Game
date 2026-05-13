@@ -25,6 +25,9 @@ ground.img.src=`images/ground.png`;
 var bg = new GameObject({x:-4096 + canvas.width,y:level.y, width:4096, height:canvas.height});
 bg.img.src = `images/skyBackground.png`;
 
+var goal = new GameObject({x:-4096 + canvas.width, y:canvas.height-256, width:256, height:256});
+goal.img.src = `images/goalHouse.png`;
+
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
 var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
 
@@ -86,8 +89,9 @@ states["game"] = function()
     {
         player.x = canvas.width/2;
         monster.x = canvas.width + player.width * 2;
-        bg.x = -4096;
-        ground.x = -4096;
+        bg.x = -4096 + canvas.width;
+        goal.x = -4096 + canvas.width;
+        ground.x = -4096 + canvas.width;
         backgroundNoise.pause();
         collisionNoise.currentTime = 0;
         collisionNoise.play();
@@ -96,7 +100,9 @@ states["game"] = function()
 
     level.x -= player.vx;
     bg.x -= player.vx * 0.5;
+    goal.x -= player.vx * 0.5;
     bg.drawStaticImage({x:0,y:0});
+    goal.drawStaticImage({x:0,y:0});
     ground.drawStaticImage({x: -ground.width/2, y: -canvas.height + 35 + player.height/2});
     player.drawRect();
     monster.drawRect();
