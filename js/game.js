@@ -25,7 +25,7 @@ ground.img.src=`images/ground.png`;
 var bg = new GameObject({x:-4096 + canvas.width,y:level.y, width:4096, height:canvas.height});
 bg.img.src = `images/skyBackground.png`;
 
-var goal = new GameObject({x:-4096 + canvas.width, y:canvas.height-256, width:256, height:256});
+var goal = new GameObject({x:-4096 + canvas.width, y:canvas.height-300, width:256, height:256});
 goal.img.src = `images/goalHouse.png`;
 
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
@@ -85,16 +85,18 @@ states["game"] = function()
     if(ground.x >= 0)ground.x = 0;
     if(ground.x <= canvas.width - 4096)ground.x = canvas.width - 4096;
 
-    if(monster.overlap(player))
+    if(monster.overlap(player) || player.overlap(goal))
     {
+        if(monster.overlap(player))
+        {
+            collisionNoise.currentTime = 0;
+            collisionNoise.play();
+        }
         player.x = canvas.width/2;
         monster.x = canvas.width + player.width * 2;
         bg.x = -4096 + canvas.width;
         goal.x = -4096 + canvas.width;
-        ground.x = -4096 + canvas.width;
         backgroundNoise.pause();
-        collisionNoise.currentTime = 0;
-        collisionNoise.play();
         currentState = "titleScreen";
     }
 
@@ -102,8 +104,8 @@ states["game"] = function()
     bg.x -= player.vx * 0.5;
     goal.x -= player.vx * 0.5;
     bg.drawStaticImage({x:0,y:0});
-    goal.drawStaticImage({x:0,y:0});
     ground.drawStaticImage({x: -ground.width/2, y: -canvas.height + 35 + player.height/2});
+    goal.drawStaticImage({x:0,y:0});
     player.drawRect();
     monster.drawRect();
 }
