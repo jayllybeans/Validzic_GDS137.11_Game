@@ -22,15 +22,15 @@ title.img.src = `images/identityTitleScreen.png`;
 var ground = new GameObject({width:canvas.width*10, x:-4096 + canvas.width,height:canvas.height,y:canvas.height-32, world:level});
 ground.img.src=`images/ground.png`;
 
-var bg = new GameObject({x:-4096 + canvas.width,y:level.y, width:4096, height:canvas.height});
+var bg = new GameObject({x:-4096 + canvas.width,y:level.y , width:4096, height:canvas.height});
 bg.img.src = `images/skyBackground.png`;
 
-var goal = new GameObject({x:-4096 + canvas.width, y:canvas.height-300, width:256, height:256});
+var goal = new GameObject({x:-4096 + canvas.width - 150, y:canvas.height/2 + 100, width:256, height:256});
 goal.img.src = `images/goalHouse.png`;
 
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
 var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
-
+console.log(ground.x);
 function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
@@ -43,6 +43,7 @@ states["titleScreen"] = function()
     if(enter)
     {
         backgroundNoise.currentTime = 0;
+        ground.x = -4096 - canvas.width;
         currentState = "game";
     }
 }
@@ -84,6 +85,7 @@ states["game"] = function()
     if(bg.x <= canvas.width - 4096)bg.x = canvas.width - 4096;
     if(ground.x >= 0)ground.x = 0;
     if(ground.x <= canvas.width - 4096)ground.x = canvas.width - 4096;
+    
 
     if(monster.overlap(player) || player.overlap(goal))
     {
@@ -91,21 +93,36 @@ states["game"] = function()
         {
             collisionNoise.currentTime = 0;
             collisionNoise.play();
+            currentState = "titleScreen";
+            player.x = canvas.width/2;
+            monster.x = canvas.width + player.width * 2;
+            bg.x = -4096 + canvas.width;
+            goal.x = -4096 + canvas.width - 100;
+            ground.x = 4096 - canvas.width;
+            level.x = 0;
+            backgroundNoise.pause();
         }
-        player.x = canvas.width/2;
-        monster.x = canvas.width + player.width * 2;
-        bg.x = -4096 + canvas.width;
-        goal.x = -4096 + canvas.width;
-        backgroundNoise.pause();
-        currentState = "titleScreen";
+        else
+        {
+            setTimeout(function() {
+        		currentState = "titleScreen";
+                player.x = canvas.width/2;
+                monster.x = canvas.width + player.width * 2;
+                bg.x = -4096 + canvas.width;
+                goal.x = -4096 + canvas.width - 100;
+                ground.x = 4096 - canvas.width;
+                level.x = 0;
+                backgroundNoise.pause();
+    			}, 500);
+        }
     }
 
     level.x -= player.vx;
     bg.x -= player.vx * 0.5;
     goal.x -= player.vx * 0.5;
     bg.drawStaticImage({x:0,y:0});
+    goal.drawStaticImage();
     ground.drawStaticImage({x: -ground.width/2, y: -canvas.height + 35 + player.height/2});
-    goal.drawStaticImage({x:0,y:0});
     player.drawRect();
     monster.drawRect();
 }
