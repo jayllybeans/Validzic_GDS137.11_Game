@@ -29,6 +29,9 @@ bg.img.src = `images/skyBackground.png`;
 var goal = new GameObject({x:-4096 + canvas.width - 150, y:canvas.height/2 + 100, width:256, height:256});
 goal.img.src = `images/goalHouse.png`;
 
+var winScreen = new GameObject({x:0, y:0, width:1024, height:512});
+winScreen.img.src = `images/winScreen.png`;
+
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
 var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
 console.log(ground.x);
@@ -44,7 +47,6 @@ states["titleScreen"] = function()
     if(enter)
     {
         backgroundNoise.currentTime = 0;
-        ground.x = -4096 - canvas.width;
         currentState = "game";
     }
 }
@@ -106,12 +108,19 @@ states["game"] = function()
         else
         {
             setTimeout(function() {
-        		daysLeft--;
+                if (Math.floor(daysLeft) == -1)
+                {
+                    currentState = "win";
+                }
+                else
+                {
+                    daysLeft -= 0.03;
+                }
                 player.x = canvas.width/2;
                 monster.x = canvas.width + player.width * 2;
                 bg.x = -4096 + canvas.width;
                 goal.x = -4096 + canvas.width - 100;
-                ground.x = 4096 - canvas.width;
+                ground.x = -4096 + canvas.width;
                 level.x = 0;
     			}, 500);
         }
@@ -129,5 +138,22 @@ states["game"] = function()
     context.font = "30px Arial black";
 	context.weight = "bold";
 	context.fillStyle = "black";
-	context.fillText("Days Left: " + daysLeft, 20, 40);
+    if(Math.floor(daysLeft) == 0)
+    {
+        context.fillText("Days Left: Last Day", 20, 40);
+    }
+    else
+    {
+        context.fillText("Days Left: " + Math.floor(daysLeft) + " Day(s)", 20, 40);
+    }
+}
+
+states["win"] = function()
+{
+    winScreen.drawStaticImage({x:0, y:0});
+    if(enter)
+    {
+        backgroundNoise.pause();
+        currentState = "titleScreen";
+    }
 }
