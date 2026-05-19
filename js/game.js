@@ -102,7 +102,7 @@ states["game"] = function()
             monster.x = canvas.width + player.width * 2;
             bg.x = -4096 + canvas.width;
             goal.x = -4096 + canvas.width - 100;
-            ground.x = 4096 - canvas.width;
+            ground.x = -4096 + canvas.width;
             level.x = 0;
             backgroundNoise.pause();
         }
