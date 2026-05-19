@@ -143,9 +143,13 @@ states["game"] = function()
     {
         context.fillText("Days Left: Last Day", 20, 40);
     }
+    else if (Math.floor(daysLeft) == 1)
+    {
+        context.fillText("Days Left: " + Math.floor(daysLeft) + " Day", 20, 40);
+    }
     else
     {
-        context.fillText("Days Left: " + Math.floor(daysLeft) + " Day(s)", 20, 40);
+        context.fillText("Days Left: " + Math.floor(daysLeft) + " Days", 20, 40);
     }
 }
 
