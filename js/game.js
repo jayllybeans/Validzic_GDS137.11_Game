@@ -46,6 +46,7 @@ states["titleScreen"] = function()
     title.drawStaticImage({x:0, y:0});
     if(enter)
     {
+        daysLeft = 4;
         backgroundNoise.currentTime = 0;
         currentState = "game";
     }
@@ -155,5 +156,6 @@ states["win"] = function()
     {
         backgroundNoise.pause();
         currentState = "titleScreen";
+        enter = false;
     }
 }
