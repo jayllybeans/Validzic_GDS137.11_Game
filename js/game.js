@@ -106,14 +106,13 @@ states["game"] = function()
         else
         {
             setTimeout(function() {
-        		currentState = "titleScreen";
+        		daysLeft--;
                 player.x = canvas.width/2;
                 monster.x = canvas.width + player.width * 2;
                 bg.x = -4096 + canvas.width;
                 goal.x = -4096 + canvas.width - 100;
                 ground.x = 4096 - canvas.width;
                 level.x = 0;
-                backgroundNoise.pause();
     			}, 500);
         }
     }
