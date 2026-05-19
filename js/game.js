@@ -3,6 +3,7 @@ var context = canvas.getContext(`2d`);
 
 var interval = 1000/60;
 var timer = setInterval(animate, interval);
+var daysLeft = 4;
 
 var gravity = 1;
 var friction = {x:.85,y:.97};
@@ -125,4 +126,9 @@ states["game"] = function()
     ground.drawStaticImage({x: -ground.width/2, y: -canvas.height + 35 + player.height/2});
     player.drawRect();
     monster.drawRect();
+
+    context.font = "30px Arial black";
+	context.weight = "bold";
+	context.fillStyle = "black";
+	context.fillText("Days Left: " + daysLeft, 20, 40);
 }
