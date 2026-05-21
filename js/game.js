@@ -26,7 +26,7 @@ ground.img.src=`images/ground.png`;
 var bg = new GameObject({x:-4096 + canvas.width,y:level.y , width:4096, height:canvas.height});
 bg.img.src = `images/skyBackground.png`;
 
-var goal = new GameObject({x:-4096 + canvas.width - 150, y:canvas.height/2 + 100, width:256, height:256});
+var goal = new GameObject({x:-4096 + canvas.width - 150, y:canvas.height/2, width:512, height:512});
 goal.img.src = `images/goalHouse.png`;
 
 var winScreen = new GameObject({x:0, y:0, width:1024, height:512});
@@ -115,7 +115,7 @@ states["game"] = function()
                 }
                 else
                 {
-                    daysLeft -= 0.03;
+                    daysLeft -= 0.01;
                 }
                 player.x = canvas.width/2;
                 monster.x = canvas.width + player.width * 2;
@@ -123,7 +123,7 @@ states["game"] = function()
                 goal.x = -4096 + canvas.width - 100;
                 ground.x = -4096 + canvas.width;
                 level.x = 0;
-    			}, 500);
+    			}, 1000);
         }
     }
 
