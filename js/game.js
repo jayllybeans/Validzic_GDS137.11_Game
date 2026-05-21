@@ -33,7 +33,7 @@ var winScreen = new GameObject({x:0, y:0, width:1024, height:512});
 winScreen.img.src = `images/winScreen.png`;
 
 var player = new GameObject({x:canvas.width/2, y:canvas.height/2, width:50, height:50, color:"green", world:{x:0,y:0}});
-var monster = new GameObject({x:canvas.width + player.width * 2, y:canvas.height + 35 - player.height *2, width:player.width *2, height:player.height *2, color:"red", world:{x:0,y:0}});
+var monster = new GameObject({x:canvas.width + player.width * 2, y:player.y + 100, width:200, height:250, color:"red", world:{x:0,y:0}});
 console.log(ground.x);
 function animate()
 {
